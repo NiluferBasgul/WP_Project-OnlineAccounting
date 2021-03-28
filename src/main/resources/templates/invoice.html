@@ -3,6 +3,8 @@
 <head th:replace="common/header :: common-header"/>
 <body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 <head th:replace="common/header :: navbar"/>
+
+
 <div class="container main">
     <div class="row">
         <div class="col-lg-12">
@@ -15,30 +17,30 @@
         <div class="col-lg-6 col-md-6">
         </div>
         <div class="col-lg-6 col-md-6">
-            <div class="panel panel-success">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h2>Savings Balance: </h2>
+                            <h2>Primary Balance: </h2>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <h1><i class="fa fa-usd" aria-hidden="true"></i> <span th:text="${cost.accountBalance}">...</span></h1>
+                            <h1><i class="fa fa-usd" aria-hidden="true"></i> <span
+                                    th:text="${invoice.accountBalance}">...</span></h1>
                         </div>
                     </div>
                 </div>
-                    <div class="panel-footer">
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="panel-footer">
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-        </div>
     </div>
 
 
     <!-- /.row -->
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped">
+        <table id="example" class="table table-bordered table-hover table-striped">
             <thead>
             <tr>
                 <th>Post Date</th>
@@ -50,13 +52,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-th-each="costTransaction : ${costTransactionList}">
-                <td data-th-text="${costTransaction.date}">...</td>
-                <td data-th-text="${costTransaction.description}">...</td>
-                <td data-th-text="${costTransaction.type}">...</td>
-                <td data-th-text="${costTransaction.status}">...</td>
-                <td data-th-text="${costTransaction.amount}">...</td>
-                <td data-th-text="${costTransaction.availableBalance}">...</td>
+            <tr data-th-each="invoiceTransaction : ${invoiceTransactionList}">
+                <td data-th-text="${invoiceTransaction.date}">...</td>
+                <td data-th-text="${invoiceTransaction.description}">...</td>
+                <td data-th-text="${invoiceTransaction.type}">...</td>
+                <td data-th-text="${invoiceTransaction.status}">...</td>
+                <td data-th-text="${invoiceTransaction.amount}">...</td>
+                <td data-th-text="${invoiceTransaction.availableBalance}">...</td>
             </tr>
             </tbody>
         </table>
@@ -65,6 +67,10 @@
 
 
 <div th:replace="common/header :: body-bottom-scripts"/>
-
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
 </body>
 </html>

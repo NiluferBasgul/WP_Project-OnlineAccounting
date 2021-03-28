@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.userFront</groupId>
-	<artifactId>userFront</artifactId>
+	<groupId>wpProject</groupId>
+	<artifactId>wpProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>UserFront</name>
-	<description>User Front for online Banking System</description>
+	<name>wpProject</name>
+	<description>Online accounting System</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
