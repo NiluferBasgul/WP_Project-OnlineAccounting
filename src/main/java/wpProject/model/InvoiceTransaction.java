@@ -37,7 +37,7 @@ public class InvoiceTransaction {
     }
 
     @ManyToOne
-    @JoinColumn(name = "primary_account_id")
+    @JoinColumn(name = "invoice_account_id")
     private Invoice invoice;
 
     public Long getId() {

@@ -72,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
     
     public void betweenAccountsTransfer(String transferFrom, String transferTo, String amount, Invoice invoice, Cost cost) throws Exception {
-        if (transferFrom.equalsIgnoreCase("Primary") && transferTo.equalsIgnoreCase("Savings")) {
+        if (transferFrom.equalsIgnoreCase("Invoice") && transferTo.equalsIgnoreCase("Cost")) {
             invoice.setAccountBalance(invoice.getAccountBalance().subtract(new BigDecimal(amount)));
             cost.setAccountBalance(cost.getAccountBalance().add(new BigDecimal(amount)));
             invoiceRepository.save(invoice);
@@ -82,7 +82,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Between account transfer from "+transferFrom+" to "+transferTo, "Account", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
             invoiceTransactionRepository.save(invoiceTransaction);
-        } else if (transferFrom.equalsIgnoreCase("Savings") && transferTo.equalsIgnoreCase("Primary")) {
+        } else if (transferFrom.equalsIgnoreCase("Cost") && transferTo.equalsIgnoreCase("Invoice")) {
             invoice.setAccountBalance(invoice.getAccountBalance().add(new BigDecimal(amount)));
             cost.setAccountBalance(cost.getAccountBalance().subtract(new BigDecimal(amount)));
             invoiceRepository.save(invoice);
@@ -119,7 +119,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
     
     public void toSomeoneElseTransfer(Company company, String accountType, String amount, Invoice invoice, Cost cost) {
-        if (accountType.equalsIgnoreCase("Primary")) {
+        if (accountType.equalsIgnoreCase("Invoice")) {
             invoice.setAccountBalance(invoice.getAccountBalance().subtract(new BigDecimal(amount)));
             invoiceRepository.save(invoice);
 
@@ -127,7 +127,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Transfer to company "+ company.getName(), "Transfer", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
             invoiceTransactionRepository.save(invoiceTransaction);
-        } else if (accountType.equalsIgnoreCase("Savings")) {
+        } else if (accountType.equalsIgnoreCase("Costs")) {
             cost.setAccountBalance(cost.getAccountBalance().subtract(new BigDecimal(amount)));
             costRepository.save(cost);
 

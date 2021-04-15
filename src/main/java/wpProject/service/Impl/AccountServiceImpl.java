@@ -55,23 +55,23 @@ public class AccountServiceImpl implements AccountService {
     public void deposit(String accountType, double amount, Principal principal) {
         User user = userService.findByUsername(principal.getName());
 
-        if (accountType.equalsIgnoreCase("Primary")) {
+        if (accountType.equalsIgnoreCase("Invoice")) {
             Invoice invoice = user.getInvoice();
             invoice.setAccountBalance(invoice.getAccountBalance().add(new BigDecimal(amount)));
             invoiceRepository.save(invoice);
 
             Date date = new Date();
 
-            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Deposit to Primary Account", "Account", "Finished", amount, invoice.getAccountBalance(), invoice);
+            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Deposit to Invoice Account", "Account", "Finished", amount, invoice.getAccountBalance(), invoice);
             transactionService.savePrimaryDepositTransaction(invoiceTransaction);
             
-        } else if (accountType.equalsIgnoreCase("Savings")) {
+        } else if (accountType.equalsIgnoreCase("Costs")) {
             Cost cost = user.getCost();
             cost.setAccountBalance(cost.getAccountBalance().add(new BigDecimal(amount)));
             costRepository.save(cost);
 
             Date date = new Date();
-            CostTransaction costTransaction = new CostTransaction(date, "Deposit to savings Account", "Account", "Finished", amount, cost.getAccountBalance(), cost);
+            CostTransaction costTransaction = new CostTransaction(date, "Deposit to costs Account", "Account", "Finished", amount, cost.getAccountBalance(), cost);
             transactionService.saveSavingsDepositTransaction(costTransaction);
         }
     }
@@ -79,22 +79,22 @@ public class AccountServiceImpl implements AccountService {
     public void withdraw(String accountType, double amount, Principal principal) {
         User user = userService.findByUsername(principal.getName());
 
-        if (accountType.equalsIgnoreCase("Primary")) {
+        if (accountType.equalsIgnoreCase("Invoice")) {
             Invoice invoice = user.getInvoice();
             invoice.setAccountBalance(invoice.getAccountBalance().subtract(new BigDecimal(amount)));
             invoiceRepository.save(invoice);
 
             Date date = new Date();
 
-            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Withdraw from Primary Account", "Account", "Finished", amount, invoice.getAccountBalance(), invoice);
+            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Withdraw from Invoice Account", "Account", "Finished", amount, invoice.getAccountBalance(), invoice);
             transactionService.savePrimaryWithdrawTransaction(invoiceTransaction);
-        } else if (accountType.equalsIgnoreCase("Savings")) {
+        } else if (accountType.equalsIgnoreCase("Costs")) {
             Cost cost = user.getCost();
             cost.setAccountBalance(cost.getAccountBalance().subtract(new BigDecimal(amount)));
             costRepository.save(cost);
 
             Date date = new Date();
-            CostTransaction costTransaction = new CostTransaction(date, "Withdraw from savings Account", "Account", "Finished", amount, cost.getAccountBalance(), cost);
+            CostTransaction costTransaction = new CostTransaction(date, "Withdraw from costs Account", "Account", "Finished", amount, cost.getAccountBalance(), cost);
             transactionService.saveSavingsWithdrawTransaction(costTransaction);
         }
     }

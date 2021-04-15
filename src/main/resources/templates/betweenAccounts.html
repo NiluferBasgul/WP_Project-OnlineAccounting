@@ -11,8 +11,8 @@
                     <label for="transferFrom">1. Please select the account you would like to transfer From:</label>
                     <select class="form-control" th:value="${transferFrom}" name="transferFrom" id="transferFrom" required="required" >
                         <option  disabled="disabled" selected="selected"> -- select your account -- </option>
-                        <option value="Primary">Primary</option>
-                        <option value="Savings">Savings</option>
+                        <option value="Invoice">Invoice</option>
+                        <option value="Cost">Costs</option>
                     </select>
                     <br />
                 </div>
@@ -21,8 +21,8 @@
                     <label for="transferTo">2. Please select the account you would like to transfer To:</label>
                     <select class="form-control" th:value="${transferTo}" name="transferTo" id="transferTo" required="required" >
                         <option  disabled="disabled" selected="selected"> -- select your account -- </option>
-                        <option value="Primary">Primary</option>
-                        <option value="Savings">Savings</option>
+                        <option value="Invoice">Invoice</option>
+                        <option value="Cost">Costs</option>
                     </select>
                     <br />
                 </div>

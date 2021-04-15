@@ -24,7 +24,7 @@ public class CostTransaction {
     private BigDecimal availableBalance;
 
     @ManyToOne
-    @JoinColumn(name = "savings_account_id")
+    @JoinColumn(name = "cost_account_id")
     private Cost cost;
 
     public CostTransaction() {}

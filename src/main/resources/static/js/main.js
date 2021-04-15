@@ -23,18 +23,18 @@
 
     $.transferDisplay = function () {
         $("#transferFrom").change(function() {
-            if ($("#transferFrom").val() == 'Primary') {
-                $('#transferTo').val('Savings');
-            } else if ($("#transferFrom").val() == 'Savings') {
-                $('#transferTo').val('Primary');
+            if ($("#transferFrom").val() === 'Invoice') {
+                $('#transferTo').val('Costs');
+            } else if ($("#transferFrom").val() === 'Costs') {
+                $('#transferTo').val('Invoice');
             }
         });
 
         $("#transferTo").change(function() {
-            if ($("#transferTo").val() == 'Primary') {
-                $('#transferFrom').val('Savings');
-            } else if ($("#transferTo").val() == 'Savings') {
-                $('#transferFrom').val('Primary');
+            if ($("#transferTo").val() === 'Invoice') {
+                $('#transferFrom').val('Costs');
+            } else if ($("#transferTo").val() === 'Costs') {
+                $('#transferFrom').val('Invoice');
             }
         });
     };
