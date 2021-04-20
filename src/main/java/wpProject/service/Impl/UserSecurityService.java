@@ -14,11 +14,13 @@ import wpProject.model.User;
 @Service
 public class UserSecurityService implements UserDetailsService {
 
-    /** The application logger */
     private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserSecurityService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

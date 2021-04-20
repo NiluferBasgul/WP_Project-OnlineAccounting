@@ -1,20 +1,18 @@
 package wpProject.controller;
 
-import java.security.Principal;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import wpProject.model.*;
-import wpProject.model.Invoice;
 import wpProject.service.AccountService;
 import wpProject.service.TransactionService;
 import wpProject.service.UserService;
+
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/account")
@@ -35,16 +33,16 @@ public class AccountController {
 		
 		User user = userService.findByUsername(principal.getName());
         Invoice invoice = user.getInvoice();
-
+        //TODO
         model.addAttribute("invoice", invoice);
         model.addAttribute("invoiceTransactionList", invoiceTransactionList);
-		
-		return "invoice";
-	}
 
-	@RequestMapping("/cost")
+        return "invoice";
+    }
+
+    @RequestMapping("/cost")
     public String cost(Model model, Principal principal) {
-		List<CostTransaction> costTransactionList = transactionService.findCostTransactionList(principal.getName());
+        List<CostTransaction> costTransactionList = transactionService.findCostTransactionList(principal.getName());
         User user = userService.findByUsername(principal.getName());
         Cost cost = user.getCost();
 
@@ -53,8 +51,8 @@ public class AccountController {
 
         return "cost";
     }
-	
-	@RequestMapping(value = "/deposit", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/deposit", method = RequestMethod.GET)//TODO
     public String deposit(Model model) {
         model.addAttribute("accountType", "");
         model.addAttribute("amount", "");
@@ -62,13 +60,13 @@ public class AccountController {
         return "deposit";
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.POST)
+    @RequestMapping(value = "/deposit", method = RequestMethod.POST)//TODO
     public String depositPOST(@ModelAttribute("amount") String amount, @ModelAttribute("accountType") String accountType, Principal principal) {
         accountService.deposit(accountType, Double.parseDouble(amount), principal);
-
+        //TODO
         return "redirect:/home";
     }
-    
+
     @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
     public String withdraw(Model model) {
         model.addAttribute("accountType", "");

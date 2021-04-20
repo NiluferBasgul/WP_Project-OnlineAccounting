@@ -24,8 +24,8 @@
                 <div class="form-group">
                     <label for="location">Pick a location:</label>
                     <select class="form-control" th:value="${procurement.location}" name="location" id="location"
-                            >
-                        <option disabled="disabled" selected="selected" > -- select the location --</option>
+                    >
+                        <option disabled="disabled" selected="selected"> -- select the location --</option>
                         <option>Skopje</option>
                         <option>Istanbul</option>
                         <option>Florida</option>
@@ -39,7 +39,8 @@
 
                 <div class="form-group">
                     <label for="description">Notes:</label>
-                    <textarea th:value="${procurement.description}" class="form-control" name="description" id="description" placeholder="Description" ></textarea>
+                    <textarea th:value="${procurement.description}" class="form-control" name="description"
+                              id="description" placeholder="Description"></textarea>
                 </div>
 
 
@@ -48,16 +49,43 @@
                        value="${_csrf.token}"/>
 
                 <a class="btn btn-primary" id="submitProcurement">Submit Scheduling</a>
-            </form>
 
-            <div class="col-md-6">
-            </div>
+                <div class="col-md-6">
+                </div>
+            </form>
         </div>
     </div>
     <br/>
+    <div class="table-responsive">
+        <table id="example" class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Confirmed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-th-each="procurement : ${procurement1}">
+                <td data-th-text="${procurement.date}">...</td>
+                <td data-th-text="${procurement.location}">...</td>
+                <td data-th-text="${procurement.description}">...</td>
+                <td data-th-text="${procurement.confirmed}">...</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
 
-<div th:replace="common/header :: body-bottom-scripts"/>
+<div th:replace="common/header :: body-bottom-scripts"></div>
 
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 </body>
 </html>

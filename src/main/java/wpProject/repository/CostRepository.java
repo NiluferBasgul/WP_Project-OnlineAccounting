@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CostRepository extends CrudRepository<Cost, Long> {
 
-    Cost findByAccountNumber (int accountNumber);
+    Cost findByAccountNumber(int accountNumber);
 }

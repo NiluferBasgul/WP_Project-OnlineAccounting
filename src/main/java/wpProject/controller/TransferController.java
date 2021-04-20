@@ -1,14 +1,13 @@
 package wpProject.controller;
 
-import java.security.Principal;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wpProject.model.Company;
 import wpProject.model.Cost;
 import wpProject.model.Invoice;
@@ -16,19 +15,30 @@ import wpProject.model.User;
 import wpProject.service.TransactionService;
 import wpProject.service.UserService;
 
+import java.security.Principal;
+import java.util.List;
+
 @Controller
 @RequestMapping("/transfer")
 public class TransferController {
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
+
+    private UserService userService;
+
+    public TransferController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @Autowired
-    private UserService userService;
+    public TransferController(TransactionService transactionService, UserService userService) {
+        this.transactionService = transactionService;
+        this.userService = userService;
+    }
 
 
     @RequestMapping(value = "/betweenAccounts", method = RequestMethod.GET)
-    public String betweenAccounts(Model model) {
+    public String betweenAccounts(Model model) {//TODO bak bniye sadece stringler var " "
         model.addAttribute("transferFrom", "");
         model.addAttribute("transferTo", "");
         model.addAttribute("amount", "");
@@ -50,7 +60,7 @@ public class TransferController {
 
         return "redirect:/home";
     }
-    
+
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String company(Model model, Principal principal) {
         List<Company> companyList = transactionService.findCompanyList(principal);
@@ -74,7 +84,7 @@ public class TransferController {
     }
 
     @RequestMapping(value = "/company/edit", method = RequestMethod.GET)
-    public String companyEdit(@RequestParam(value = "companyName") String companyName, Model model, Principal principal){
+    public String companyEdit(@RequestParam(value = "companyName") String companyName, Model model, Principal principal) {
 
         Company company = transactionService.findCompanyByName(companyName);
         List<Company> companyList = transactionService.findCompanyList(principal);
@@ -87,7 +97,7 @@ public class TransferController {
 
     @RequestMapping(value = "/company/delete", method = RequestMethod.GET)
     @Transactional
-    public String companyDelete(@RequestParam(value = "companyName") String companyName, Model model, Principal principal){
+    public String companyDelete(@RequestParam(value = "companyName") String companyName, Model model, Principal principal) {
 
         transactionService.deleteCompanyByName(companyName);
 
@@ -101,7 +111,7 @@ public class TransferController {
         return "company";
     }
 
-    @RequestMapping(value = "/toSomeoneElse",method = RequestMethod.GET)
+    @RequestMapping(value = "/toSomeoneElse", method = RequestMethod.GET)
     public String toSomeoneElse(Model model, Principal principal) {
         List<Company> companyList = transactionService.findCompanyList(principal);
 
@@ -111,7 +121,7 @@ public class TransferController {
         return "toSomeoneElse";
     }
 
-    @RequestMapping(value = "/toSomeoneElse",method = RequestMethod.POST)
+    @RequestMapping(value = "/toSomeoneElse", method = RequestMethod.POST)
     public String toSomeoneElsePost(@ModelAttribute("companyName") String companyName, @ModelAttribute("accountType") String accountType, @ModelAttribute("amount") String amount, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         Company company = transactionService.findCompanyByName(companyName);

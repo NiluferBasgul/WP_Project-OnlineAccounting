@@ -1,23 +1,24 @@
 package wpProject.controller;
 
-import java.security.Principal;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import wpProject.model.User;
 import wpProject.service.UserService;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(Principal principal, Model model) {
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public String profilePost(@ModelAttribute("user") User newUser, Model model) {
+    public String profilePost(@ModelAttribute("user") User newUser, Model model) {//TODO
         User user = userService.findByUsername(newUser.getUsername());
         user.setUsername(newUser.getUsername());
         user.setFirstName(newUser.getFirstName());

@@ -1,19 +1,17 @@
 package wpProject.service.Impl;
 
-import java.math.BigDecimal;
-import java.security.Principal;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import wpProject.model.*;
-import wpProject.repository.InvoiceRepository;
 import wpProject.repository.CostRepository;
-import wpProject.model.CostTransaction;
+import wpProject.repository.InvoiceRepository;
 import wpProject.service.AccountService;
 import wpProject.service.TransactionService;
 import wpProject.service.UserService;
+
+import java.math.BigDecimal;
+import java.security.Principal;
+import java.util.Date;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -34,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 
     public Invoice createInvoice() {
         Invoice invoice = new Invoice();
-        invoice.setAccountBalance(new BigDecimal(0.0));
+        invoice.setAccountBalance(new BigDecimal("0.0"));
         invoice.setAccountNumber(accountGen());
 
         invoiceRepository.save(invoice);
@@ -44,14 +42,14 @@ public class AccountServiceImpl implements AccountService {
 
     public Cost createCost() {
         Cost cost = new Cost();
-        cost.setAccountBalance(new BigDecimal(0.0));
+        cost.setAccountBalance(new BigDecimal("0.0"));
         cost.setAccountNumber(accountGen());
 
         costRepository.save(cost);
 
         return costRepository.findByAccountNumber(cost.getAccountNumber());
     }
-    
+
     public void deposit(String accountType, double amount, Principal principal) {
         User user = userService.findByUsername(principal.getName());
 
@@ -64,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
 
             InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Deposit to Invoice Account", "Account", "Finished", amount, invoice.getAccountBalance(), invoice);
             transactionService.savePrimaryDepositTransaction(invoiceTransaction);
-            
+
         } else if (accountType.equalsIgnoreCase("Costs")) {
             Cost cost = user.getCost();
             cost.setAccountBalance(cost.getAccountBalance().add(new BigDecimal(amount)));
@@ -75,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
             transactionService.saveSavingsDepositTransaction(costTransaction);
         }
     }
-    
+
     public void withdraw(String accountType, double amount, Principal principal) {
         User user = userService.findByUsername(principal.getName());
 
@@ -98,11 +96,10 @@ public class AccountServiceImpl implements AccountService {
             transactionService.saveSavingsWithdrawTransaction(costTransaction);
         }
     }
-    
+
     private int accountGen() {
         return ++nextAccountNumber;
     }
 
-	
 
 }

@@ -23,7 +23,8 @@ public class InvoiceTransaction {
     private double amount;
     private BigDecimal availableBalance;
 
-    public InvoiceTransaction() {}
+    public InvoiceTransaction() {
+    }
 
 
     public InvoiceTransaction(Date date, String description, String type, String status, double amount, BigDecimal availableBalance, Invoice invoice) {

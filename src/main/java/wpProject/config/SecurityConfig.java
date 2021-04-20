@@ -18,16 +18,19 @@ import wpProject.service.Impl.UserSecurityService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)//TODO
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
-    @Autowired
-    private UserSecurityService userSecurityService;
+    private final UserSecurityService userSecurityService;
 
     private static final String SALT = "salt";
+
+    public SecurityConfig(Environment env, UserSecurityService userSecurityService) {
+        this.env = env;
+        this.userSecurityService = userSecurityService;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -62,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe();
     }
-
 
 
     @Autowired

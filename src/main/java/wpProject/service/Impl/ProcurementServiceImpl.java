@@ -1,13 +1,12 @@
 package wpProject.service.Impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import wpProject.model.Procurement;
 import wpProject.repository.ProcurementRepository;
 import wpProject.service.ProcurementService;
+
+import java.util.List;
 
 @Service
 public class ProcurementServiceImpl implements ProcurementService {
@@ -16,7 +15,7 @@ public class ProcurementServiceImpl implements ProcurementService {
     private ProcurementRepository procurementRepository;
 
     public Procurement createProcurement(Procurement procurement) {
-       return procurementRepository.save(procurement);
+        return procurementRepository.save(procurement);
     }
 
     public List<Procurement> findAll() {
@@ -32,4 +31,10 @@ public class ProcurementServiceImpl implements ProcurementService {
         procurement.setConfirmed(true);
         procurementRepository.save(procurement);
     }
+//
+//    @Override
+//    public List<Object> createProcurements(String test, Long id, Long id1) {
+//        return Collections.singletonList(procurementRepository.saves(test, id, id1));
+//    }
+
 }

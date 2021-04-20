@@ -1,33 +1,29 @@
 package wpProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import wpProject.model.security.Authority;
+import wpProject.model.security.UserRole;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import wpProject.model.security.Authority;
-import wpProject.model.security.UserRole;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId",updatable = false)
+    @Column(name = "userId", updatable = false)
     private Long userId;
 
 
@@ -40,7 +36,7 @@ public class User implements UserDetails{
     private String email;
     private String phone;
 
-    private boolean enabled=true;
+    private boolean enabled = true;
 
     @OneToOne
     private Invoice invoice;
@@ -58,6 +54,31 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private wpProject.model.Provider provider;
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public User toUserDTO(){
+        return User.builder()
+                .userId(this.getUserId())
+                .email(this.getEmail())
+                .firstName(this.getName())
+                .lastName(this.getLastName())
+                .username(this.getUsername())
+                .phone(this.getPhone())
+                .companyList(this.getCompanyList())
+                .procurementList(this.getProcurementList())
+                .build();
+    }
+
 
     public Set<UserRole> getUserRoles() {
         return userRoles;

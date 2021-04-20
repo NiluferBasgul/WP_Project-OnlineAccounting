@@ -1,33 +1,40 @@
 package wpProject.controller;
 
-import java.security.Principal;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import wpProject.model.Cost;
-import wpProject.repository.RoleRepository;
 import wpProject.model.Invoice;
 import wpProject.model.User;
 import wpProject.model.security.UserRole;
+import wpProject.repository.RoleRepository;
 import wpProject.service.UserService;
+
+import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class HomeController {
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	
-	@Autowired
-    private RoleRepository roleRepository;
-	
-	@RequestMapping("/")
+	private RoleRepository roleRepository;
+
+    public HomeController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public HomeController(UserService userService, RoleRepository roleRepository) {
+        this.userService = userService;
+        this.roleRepository = roleRepository;
+    }
+
+    @RequestMapping("/")//TODO
 	public String home() {
 		return "redirect:/index";
 	}
@@ -61,7 +68,7 @@ public class HomeController {
                 }
 
                 return "signup";
-            } else {
+            } else {//TODO
                 Set<UserRole> userRoles = new HashSet<>();
                 userRoles.add(new UserRole(user, roleRepository.findByName("ROLE_USER")));
 

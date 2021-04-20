@@ -1,13 +1,14 @@
 package wpProject.service;
 
-import java.util.List;
-import java.util.Set;
-
+import io.swagger.annotations.ApiResponse;
 import wpProject.model.User;
 import wpProject.model.security.UserRole;
 
+import java.util.List;
+import java.util.Set;
+
 public interface UserService {
-	User findByUsername(String username);
+    User findByUsername(String username);
 
     User findByEmail(String email);
 
@@ -16,17 +17,17 @@ public interface UserService {
     boolean checkUsernameExists(String username);
 
     boolean checkEmailExists(String email);
-    
-    void save (User user);
-    
+
+    void save(User user);
+
     User createUser(User user, Set<UserRole> userRoles);
-    
-    User saveUser (User user); 
-    
+
+    User saveUser(User user);
+
     List<User> findUserList();
 
-    void enableUser (String username);
+    void enableUser(String username);
 
-    void disableUser (String username);
+    ApiResponse disableUser(String username);
 
 }

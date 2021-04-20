@@ -5,27 +5,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-
 @Entity
 public class Role {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int roleId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long roleId;
 
-    private String name;
+    public String name;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    public Role() {
 
-    }
-
-    public int getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(int roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

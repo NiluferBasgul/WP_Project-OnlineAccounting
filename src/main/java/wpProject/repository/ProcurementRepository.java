@@ -1,12 +1,14 @@
 package wpProject.repository;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
-
 import wpProject.model.Procurement;
+
+import java.util.List;
 
 public interface ProcurementRepository extends CrudRepository<Procurement, Long> {
 
     List<Procurement> findAll();
+
+//    Procurement saves(String test, Long id, Long id1);
+
 }

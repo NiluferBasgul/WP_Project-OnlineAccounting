@@ -22,7 +22,7 @@ public class Cost {
     private int accountNumber;
     private BigDecimal accountBalance;
 
-    @OneToMany(mappedBy = "cost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)//TODO
     @JsonIgnore
     private List<CostTransaction> costTransactionList;
 

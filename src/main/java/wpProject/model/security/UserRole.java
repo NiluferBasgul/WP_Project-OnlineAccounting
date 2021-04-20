@@ -5,9 +5,8 @@ import wpProject.model.User;
 import javax.persistence.*;
 
 
-
 @Entity
-@Table(name="user_role")
+@Table(name = "user_role")
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +27,8 @@ public class UserRole {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public UserRole() {}
+    public UserRole() {
+    }
 
     public long getUserRoleId() {
         return userRoleId;

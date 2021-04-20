@@ -13,7 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)//TODO
 public class RequestFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) {
@@ -29,7 +29,7 @@ public class RequestFilter implements Filter {
         if (!(request.getMethod().equalsIgnoreCase("OPTIONS"))) {
             try {
                 chain.doFilter(req, res);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
@@ -43,8 +43,10 @@ public class RequestFilter implements Filter {
 
     }
 
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
-    public void destroy() {}
+    public void destroy() {
+    }
 
 }

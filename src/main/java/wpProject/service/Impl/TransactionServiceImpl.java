@@ -21,27 +21,30 @@ import wpProject.service.UserService;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private InvoiceTransactionRepository invoiceTransactionRepository;
-	
-	@Autowired
-	private CostTransactionRepository costTransactionRepository;
-	
-	@Autowired
-	private InvoiceRepository invoiceRepository;
-	
-	@Autowired
-	private CostRepository costRepository;
-	
-	@Autowired
-	private CompanyRepository companyRepository;
-	
 
-	public List<InvoiceTransaction> findInvoiceTransactionList(String username){
+    private final UserService userService;
+
+    private final InvoiceTransactionRepository invoiceTransactionRepository;
+
+    private final CostTransactionRepository costTransactionRepository;
+
+    private final InvoiceRepository invoiceRepository;
+
+    private final CostRepository costRepository;
+
+    private final CompanyRepository companyRepository;
+
+    public TransactionServiceImpl(UserService userService, InvoiceTransactionRepository invoiceTransactionRepository, CostTransactionRepository costTransactionRepository, InvoiceRepository invoiceRepository, CostRepository costRepository, CompanyRepository companyRepository) {
+        this.userService = userService;
+        this.invoiceTransactionRepository = invoiceTransactionRepository;
+        this.costTransactionRepository = costTransactionRepository;
+        this.invoiceRepository = invoiceRepository;
+        this.costRepository = costRepository;
+        this.companyRepository = companyRepository;
+    }
+
+
+    public List<InvoiceTransaction> findInvoiceTransactionList(String username) {
         User user = userService.findByUsername(username);
         List<InvoiceTransaction> invoiceTransactionList = user.getInvoice().getInvoiceTransactionList();
 
@@ -62,7 +65,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void saveSavingsDepositTransaction(CostTransaction costTransaction) {
         costTransactionRepository.save(costTransaction);
     }
-    
+
     public void savePrimaryWithdrawTransaction(InvoiceTransaction invoiceTransaction) {
         invoiceTransactionRepository.save(invoiceTransaction);
     }
@@ -70,7 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void saveSavingsWithdrawTransaction(CostTransaction costTransaction) {
         costTransactionRepository.save(costTransaction);
     }
-    
+
     public void betweenAccountsTransfer(String transferFrom, String transferTo, String amount, Invoice invoice, Cost cost) throws Exception {
         if (transferFrom.equalsIgnoreCase("Invoice") && transferTo.equalsIgnoreCase("Cost")) {
             invoice.setAccountBalance(invoice.getAccountBalance().subtract(new BigDecimal(amount)));
@@ -80,7 +83,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             Date date = new Date();
 
-            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Between account transfer from "+transferFrom+" to "+transferTo, "Account", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
+            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Between account transfer from " + transferFrom + " to " + transferTo, "Account", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
             invoiceTransactionRepository.save(invoiceTransaction);
         } else if (transferFrom.equalsIgnoreCase("Cost") && transferTo.equalsIgnoreCase("Invoice")) {
             invoice.setAccountBalance(invoice.getAccountBalance().add(new BigDecimal(amount)));
@@ -90,17 +93,17 @@ public class TransactionServiceImpl implements TransactionService {
 
             Date date = new Date();
 
-            CostTransaction costTransaction = new CostTransaction(date, "Between account transfer from "+transferFrom+" to "+transferTo, "Transfer", "Finished", Double.parseDouble(amount), cost.getAccountBalance(), cost);
+            CostTransaction costTransaction = new CostTransaction(date, "Between account transfer from " + transferFrom + " to " + transferTo, "Transfer", "Finished", Double.parseDouble(amount), cost.getAccountBalance(), cost);
             costTransactionRepository.save(costTransaction);
         } else {
             throw new Exception("Invalid Transfer");
         }
     }
-    
+
     public List<Company> findCompanyList(Principal principal) {
         String username = principal.getName();
-        List<Company> companyList = companyRepository.findAll().stream() 			//convert list to stream
-                .filter(company -> username.equals(company.getUser().getUsername()))	//filters the line, equals to username
+        List<Company> companyList = companyRepository.findAll().stream()            //convert list to stream
+                .filter(company -> username.equals(company.getUser().getUsername()))    //filters the line, equals to username
                 .collect(Collectors.toList());
 
         return companyList;
@@ -117,7 +120,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void deleteCompanyByName(String companyName) {
         companyRepository.deleteByName(companyName);
     }
-    
+
     public void toSomeoneElseTransfer(Company company, String accountType, String amount, Invoice invoice, Cost cost) {
         if (accountType.equalsIgnoreCase("Invoice")) {
             invoice.setAccountBalance(invoice.getAccountBalance().subtract(new BigDecimal(amount)));
@@ -125,7 +128,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             Date date = new Date();
 
-            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Transfer to company "+ company.getName(), "Transfer", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
+            InvoiceTransaction invoiceTransaction = new InvoiceTransaction(date, "Transfer to company " + company.getName(), "Transfer", "Finished", Double.parseDouble(amount), invoice.getAccountBalance(), invoice);
             invoiceTransactionRepository.save(invoiceTransaction);
         } else if (accountType.equalsIgnoreCase("Costs")) {
             cost.setAccountBalance(cost.getAccountBalance().subtract(new BigDecimal(amount)));
@@ -133,8 +136,13 @@ public class TransactionServiceImpl implements TransactionService {
 
             Date date = new Date();
 
-            CostTransaction costTransaction = new CostTransaction(date, "Transfer to company "+ company.getName(), "Transfer", "Finished", Double.parseDouble(amount), cost.getAccountBalance(), cost);
+            CostTransaction costTransaction = new CostTransaction(date, "Transfer to company " + company.getName(), "Transfer", "Finished", Double.parseDouble(amount), cost.getAccountBalance(), cost);
             costTransactionRepository.save(costTransaction);
         }
+    }
+
+    @Override
+    public void create(String c2, String c21) {
+
     }
 }

@@ -27,7 +27,8 @@ public class CostTransaction {
     @JoinColumn(name = "cost_account_id")
     private Cost cost;
 
-    public CostTransaction() {}
+    public CostTransaction() {
+    }
 
     public CostTransaction(Date date, String description, String type, String status, double amount, BigDecimal availableBalance, Cost cost) {
         this.date = date;

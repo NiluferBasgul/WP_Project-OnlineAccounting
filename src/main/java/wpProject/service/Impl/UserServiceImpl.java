@@ -1,21 +1,21 @@
 package wpProject.service.Impl;
 
-import java.util.List;
-import java.util.Set;
-
+import io.swagger.annotations.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import wpProject.repository.RoleRepository;
-import wpProject.repository.UserRepository;
 import wpProject.model.User;
 import wpProject.model.security.UserRole;
+import wpProject.repository.RoleRepository;
+import wpProject.repository.UserRepository;
 import wpProject.service.AccountService;
 import wpProject.service.UserService;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService{
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    
-    
+
+
     public User createUser(User user, Set<UserRole> userRoles) {
         User localUser = userRepository.findByUsername(user.getUsername());
 
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService{
             user.setPassword(encryptedPassword);
 
             for (UserRole ur : userRoles) {
-                if(ur != null && ur.getRole() != null) {
+                if (ur != null && ur.getRole() != null) {
                     roleRepository.save(ur.getRole());
                 }
             }
@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService{
 
         return localUser;
     }
-    
-    public boolean checkUserExists(String username, String email){
+
+    public boolean checkUserExists(String username, String email) {
         if (checkUsernameExists(username) || checkEmailExists(username)) {
             return true;
         } else {
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService{
 
         return false;
     }
-    
+
     public boolean checkEmailExists(String email) {
         if (null != findByEmail(email)) {
             return true;
@@ -98,25 +98,27 @@ public class UserServiceImpl implements UserService{
         return false;
     }
 
-    public User saveUser (User user) {
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
-    
+
     public List<User> findUserList() {
         return userRepository.findAll();
     }
 
-    public void enableUser (String username) {
+    public void enableUser(String username) {
         User user = findByUsername(username);
         user.setEnabled(true);
         userRepository.save(user);
     }
 
-    public void disableUser (String username) {
+    public ApiResponse disableUser(String username) {
         User user = findByUsername(username);
         user.setEnabled(false);
         System.out.println(user.isEnabled());
         userRepository.save(user);
         System.out.println(username + " is disabled.");
+        return null;
     }
+
 }
