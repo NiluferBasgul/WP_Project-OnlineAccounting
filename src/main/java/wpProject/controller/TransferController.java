@@ -38,7 +38,7 @@ public class TransferController {
 
 
     @RequestMapping(value = "/betweenAccounts", method = RequestMethod.GET)
-    public String betweenAccounts(Model model) {//TODO bak bniye sadece stringler var " "
+    public String betweenAccounts(Model model) {
         model.addAttribute("transferFrom", "");
         model.addAttribute("transferTo", "");
         model.addAttribute("amount", "");

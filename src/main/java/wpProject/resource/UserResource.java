@@ -11,7 +11,7 @@ import wpProject.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api") //TODO
+@RequestMapping("/api")
 @PreAuthorize("hasRole('ADMIN')")
 public class UserResource {
 

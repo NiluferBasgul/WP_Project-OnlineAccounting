@@ -9,6 +9,5 @@ public interface ProcurementRepository extends CrudRepository<Procurement, Long>
 
     List<Procurement> findAll();
 
-//    Procurement saves(String test, Long id, Long id1);
 
 }

@@ -1,6 +1,7 @@
 package wpProject.service;
 
 import io.swagger.annotations.ApiResponse;
+import wpProject.model.Provider;
 import wpProject.model.User;
 import wpProject.model.security.UserRole;
 
@@ -30,4 +31,9 @@ public interface UserService {
 
     ApiResponse disableUser(String username);
 
+    void processOAuthPostLogin(String username);
+
+    void registerNewUser(String email, String name, Provider provider);
+
+    void updateUser(User user, String name, Provider provider);
 }

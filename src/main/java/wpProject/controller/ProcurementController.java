@@ -32,7 +32,7 @@ public class ProcurementController {
         Procurement procurement = new Procurement();
         User users = userService.findByUsername(principal.getName());
         List<Procurement> procurement1 = users.getProcurementList();
-        model.addAttribute("procurement", procurement);//TODO bak silersen bunu nolur
+        model.addAttribute("procurement", procurement);
         model.addAttribute("procurement1", procurement1);
         model.addAttribute("date", "");
 

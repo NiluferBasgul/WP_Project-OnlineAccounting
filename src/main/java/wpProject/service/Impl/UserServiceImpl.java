@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wpProject.model.Provider;
 import wpProject.model.User;
 import wpProject.model.security.UserRole;
 import wpProject.repository.RoleRepository;
@@ -119,6 +120,42 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         System.out.println(username + " is disabled.");
         return null;
+    }
+
+    @Autowired
+    private UserRepository repo;
+
+    public void processOAuthPostLogin(String username) {
+        User existUser = repo.getUserByUsername(username);
+
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setProvider(Provider.FACEBOOK);
+            newUser.setEnabled(true);
+
+            repo.save(newUser);
+        }
+
+    }
+
+    @Override
+    public void registerNewUser(String email, String name, Provider provider) {
+        User user = new User();
+        user.setEmail(email);
+        user.setFirstName(name);
+        user.setEnabled(true);
+        user.setProvider(provider);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(User user, String name, Provider provider) {
+        user.setFirstName(name);
+        user.setProvider(provider);
+
+        userRepository.save(user);
     }
 
 }

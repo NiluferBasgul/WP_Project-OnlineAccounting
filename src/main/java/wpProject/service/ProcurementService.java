@@ -13,5 +13,4 @@ public interface ProcurementService {
 
     void confirmProcurement(Long id);
 
-//    List<Object> createProcurements(String test, Long id, Long id1);
 }

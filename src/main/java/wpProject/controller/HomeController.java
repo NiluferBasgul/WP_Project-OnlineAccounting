@@ -34,7 +34,7 @@ public class HomeController {
         this.roleRepository = roleRepository;
     }
 
-    @RequestMapping("/")//TODO
+    @RequestMapping("/")
 	public String home() {
 		return "redirect:/index";
 	}
@@ -68,7 +68,7 @@ public class HomeController {
                 }
 
                 return "signup";
-            } else {//TODO
+            } else {
                 Set<UserRole> userRoles = new HashSet<>();
                 userRoles.add(new UserRole(user, roleRepository.findByName("ROLE_USER")));
 

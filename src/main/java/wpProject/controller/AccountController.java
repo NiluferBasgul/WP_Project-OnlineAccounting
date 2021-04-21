@@ -33,7 +33,6 @@ public class AccountController {
 		
 		User user = userService.findByUsername(principal.getName());
         Invoice invoice = user.getInvoice();
-        //TODO
         model.addAttribute("invoice", invoice);
         model.addAttribute("invoiceTransactionList", invoiceTransactionList);
 
@@ -52,7 +51,7 @@ public class AccountController {
         return "cost";
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.GET)//TODO
+    @RequestMapping(value = "/deposit", method = RequestMethod.GET)
     public String deposit(Model model) {
         model.addAttribute("accountType", "");
         model.addAttribute("amount", "");
@@ -60,10 +59,9 @@ public class AccountController {
         return "deposit";
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.POST)//TODO
+    @RequestMapping(value = "/deposit", method = RequestMethod.POST)
     public String depositPOST(@ModelAttribute("amount") String amount, @ModelAttribute("accountType") String accountType, Principal principal) {
         accountService.deposit(accountType, Double.parseDouble(amount), principal);
-        //TODO
         return "redirect:/home";
     }
 

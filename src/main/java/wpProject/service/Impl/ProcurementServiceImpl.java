@@ -31,10 +31,6 @@ public class ProcurementServiceImpl implements ProcurementService {
         procurement.setConfirmed(true);
         procurementRepository.save(procurement);
     }
-//
-//    @Override
-//    public List<Object> createProcurements(String test, Long id, Long id1) {
-//        return Collections.singletonList(procurementRepository.saves(test, id, id1));
-//    }
+
 
 }

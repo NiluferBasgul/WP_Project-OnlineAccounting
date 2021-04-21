@@ -13,6 +13,10 @@ public class OAuth2User implements org.springframework.security.oauth2.core.user
         this.oAuth2User = oAuth2User;
     }
 
+    public OAuth2User() {
+
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return oAuth2User.getAuthorities();
