@@ -11,16 +11,16 @@ Online Accounting Requirements.
 - The accounting system is performed by arranging all invoices, bills, payments, receipts, etc.
 - Basic data will be stored for each client username, first name, last name, password, email and phone number.
 - Each user after login can generate:
- - **Procurement schedules:**
-    -  аrrange for procurements that have not yet been sold or are waiting in which warehouses (which city).
-  - **Invoice transaction:**
-      - all invoice entries related to invoice transactions are entered in the pre-accounting program. Here it becomes possible to reach all accounts historically.
- - **Cost transaction:**
-     - During the activities of a company, cash inflows from and to the cash register are recorded. Money received in return for property sold and payment in installments are recorded as income.
- - **Deposit:**
-     - money entering your bank account.
- - **Withdrawal:**
-      - money coming out of your bank account.
+  - **Procurement schedules:**
+     -  аrrange for procurements that have not yet been sold or are waiting in which warehouses (which city).
+   - **Invoice transaction:**
+       - all invoice entries related to invoice transactions are entered in the pre-accounting program. Here it becomes possible to reach all accounts historically.
+  - **Cost transaction:**
+      - During the activities of a company, cash inflows from and to the cash register are recorded. Money received in return for property sold and payment in installments are recorded as income.
+  - **Deposit:**
+      - money entering your bank account.
+  - **Withdrawal:**
+       - money coming out of your bank account.
 
 
 **The Accounting system consists of two parts:**
